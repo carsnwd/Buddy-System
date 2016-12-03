@@ -45,7 +45,7 @@ public class IdleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 _t.cancel(); //cancel the task since the user clicked the button
-                IdleActivity.super.onBackPressed();
+                finish();
             }
         });
     }

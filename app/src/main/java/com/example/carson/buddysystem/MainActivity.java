@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private int minute_x;
     private int hour_x;
     private SMS alertObject;
-    private String timeString;
+    private String timeString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +40,46 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText phoneNumber = (EditText)findViewById(R.id.buddyNumber);
-                EditText location = (EditText)findViewById(R.id.location);
-                alertObject = new SMS();
-                alertObject.setPhoneNumber(phoneNumber.getText().toString());
-                alertObject.setLocation(location.getText().toString());
-                alertObject.setTimeToBeBack(timeString);
-                //onSendTextMessage();
-                Intent idleIntent = new Intent(MainActivity.this, IdleActivity.class);
-                idleIntent.putExtra("SMSObject", alertObject);
-                MainActivity.this.startActivity(idleIntent);
+
+                if (phoneNumber.getText().toString().length() != 10) { //phone number should be 10 digits long
+
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Phone number too long or short", Toast.LENGTH_LONG);
+                    toast.show();
+                    finish(); //reload for now
+                    startActivity(getIntent());
+                }else {
+                    EditText location = (EditText) findViewById(R.id.location);
+
+                    if (location.getText().toString().length() < 3) { //location must be longer than 3 characters
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Location must be longer than 3 characters", Toast.LENGTH_LONG);
+                        toast.show();
+                        finish(); //reload for now
+                        startActivity(getIntent());
+                    }else {
+
+                        alertObject = new SMS();
+                        alertObject.setPhoneNumber(phoneNumber.getText().toString());
+                        alertObject.setLocation(location.getText().toString());
+                        alertObject.setTimeToBeBack(timeString);
+
+                        if(timeString.equals("")){ //fail to enter a time
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Select a time", Toast.LENGTH_LONG);
+                            toast.show();
+                            finish(); //reload for now
+                            startActivity(getIntent());
+                        }else {
+
+                            //onSendTextMessage();
+                            Intent idleIntent = new Intent(MainActivity.this, IdleActivity.class);
+                            idleIntent.putExtra("SMSObject", alertObject);
+                            MainActivity.this.startActivity(idleIntent);
+                            
+                        }
+                    }
+                }
             }
         });
 
