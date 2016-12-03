@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent idleIntent = new Intent(MainActivity.this, IdleActivity.class);
                             idleIntent.putExtra("SMSObject", alertObject);
                             MainActivity.this.startActivity(idleIntent);
-                            
+
                         }
                     }
                 }

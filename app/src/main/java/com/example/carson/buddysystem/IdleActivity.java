@@ -45,6 +45,7 @@ public class IdleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 _t.cancel(); //cancel the task since the user clicked the button
+                //onSendTextMessage(true);
                 finish();
             }
         });
@@ -53,7 +54,7 @@ public class IdleActivity extends AppCompatActivity {
     class WaitTask extends TimerTask{
 
         public void run (){//runs if the user does not respond to the button
-            onSendTextMessage();
+            onSendTextMessage(false);
             //could have a better message
             //cannnot do IdleActivity.super.onBackPressed();
             _t.cancel(); //end the task
@@ -64,18 +65,17 @@ public class IdleActivity extends AppCompatActivity {
      * Send a text message
      * Used when a button is pressed for now
      */
-    protected void onSendTextMessage(){
+    protected void onSendTextMessage(boolean madeit){
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
         PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, SMS.class), 0);
         SmsManager sms = SmsManager.getDefault();
-        String message = "I will be at: " + alertObject.getLocation() +".\n" +   //Message to send
-                "I will be back at: " + alertObject.getTimeToBeBack() + ".\n";
+        String message = "";
+        if(!madeit) {
+            message = "I was at: " + alertObject.getLocation() + ".\n" +   //Message to send
+                    "I should've been back at: " + alertObject.getTimeToBeBack() + ".\n" +
+                    "You should check up on me.\n";
+        }
         sms.sendTextMessage(alertObject.getPhoneNumber(), null, message, pi, null);
-
-        //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        //sendIntent.putExtra("sms_body", message);
-        //sendIntent.setType("vnd.android-dir/mms-sms");
-        //startActivity(sendIntent);
     }
 
     /**
