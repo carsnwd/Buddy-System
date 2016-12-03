@@ -38,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText phoneNumber = (EditText)findViewById(R.id.buddyNumber);
                 EditText location = (EditText)findViewById(R.id.location);
-                //EditText timeToBeBack = (EditText)findViewById(R.id.timeBack);
                 setPhoneNumber(phoneNumber.getText().toString());
                 setLocation(location.getText().toString());
-                //setTimeToBeBack(timeToBeBack.getText().toString());
                 System.out.println(getLocation() + " " + getPhoneNumber() + " " + getTimeToBeBack());
-                onSendTextMessage();
+                //onSendTextMessage();
+                Intent myIntent = new Intent(MainActivity.this, IdleActivity.class);
+                MainActivity.this.startActivity(myIntent);
             }
         });
 
