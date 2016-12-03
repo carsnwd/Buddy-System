@@ -16,5 +16,9 @@
             </intent-filter>
         </activity>
     </application>
-
+    <!--Request permissions for sending and receiving text messages-->
+    <uses-permission android:name="android.permission.SEND_SMS">
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS">
+    </uses-permission>
 </manifest>
