@@ -1,16 +1,24 @@
 package com.example.carson.buddysystem;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private String phoneNumber; //information about where the user is going
     private String location;
     private String timeToBeBack;
+    static final int DIALOG_ID = 0;
+    private int minute_x;
+    private int hour_x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +34,54 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText phoneNumber = (EditText)findViewById(R.id.buddyNumber);
                 EditText location = (EditText)findViewById(R.id.location);
-                EditText timeToBeBack = (EditText)findViewById(R.id.timeBack);
+                //EditText timeToBeBack = (EditText)findViewById(R.id.timeBack);
                 setPhoneNumber(phoneNumber.getText().toString());
                 setLocation(location.getText().toString());
-                setTimeToBeBack(timeToBeBack.getText().toString());
+                //setTimeToBeBack(timeToBeBack.getText().toString());
+                System.out.println(getLocation() + " " + getPhoneNumber() + " " + getTimeToBeBack());
+            }
+        });
 
-                //System.out.println(getLocation() + " " + getPhoneNumber() + " " + getTimeToBeBack());
+        /**
+         * Opens the time picker dialog
+         */
+        final Button timeBtn = (Button) findViewById(R.id.timeButton);
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(0);
             }
         });
     }
+
+    /**
+     * Sets up timePicker dialog
+     * @param id = our time picker dialog id
+     * @return
+     */
+    protected Dialog onCreateDialog(int id){
+        if(id == DIALOG_ID) {
+            return new TimePickerDialog(MainActivity.this, kTimePickerListener, hour_x, minute_x,
+                    false);
+        }
+
+        return null;
+    }
+
+    protected TimePickerDialog.OnTimeSetListener kTimePickerListener =
+            new TimePickerDialog.OnTimeSetListener(){
+                @Override
+                public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+                    hour_x = hourOfDay;
+                    minute_x = minute;
+                    if(minute < 10){
+                        setTimeToBeBack(hour_x + ":" + "0" + minute_x);
+                    }else{
+                        setTimeToBeBack(hour_x + ":" + minute_x);
+                    }
+                 //Toast.makeText(MainActivity.this, hour_x + ":" + minute_x, Toast.LENGTH_LONG).show();
+                }
+            };
 
     /**
      * Send a text message
