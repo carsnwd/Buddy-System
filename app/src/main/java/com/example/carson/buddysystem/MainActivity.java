@@ -12,6 +12,7 @@ import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -20,12 +21,11 @@ import android.widget.Toast;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private String phoneNumber; //information about where the user is going
-    private String location;
-    private String timeToBeBack;
     static final int DIALOG_ID = 0;
     private int minute_x;
     private int hour_x;
+    private SMS alertObject;
+    private String timeString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText phoneNumber = (EditText)findViewById(R.id.buddyNumber);
                 EditText location = (EditText)findViewById(R.id.location);
-                setPhoneNumber(phoneNumber.getText().toString());
-                setLocation(location.getText().toString());
-                System.out.println(getLocation() + " " + getPhoneNumber() + " " + getTimeToBeBack());
+                alertObject = new SMS();
+                alertObject.setPhoneNumber(phoneNumber.getText().toString());
+                alertObject.setLocation(location.getText().toString());
+                alertObject.setTimeToBeBack(timeString);
                 //onSendTextMessage();
-                Intent myIntent = new Intent(MainActivity.this, IdleActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                Intent idleIntent = new Intent(MainActivity.this, IdleActivity.class);
+                idleIntent.putExtra("SMSObject", alertObject);
+                MainActivity.this.startActivity(idleIntent);
             }
         });
 
@@ -82,10 +84,13 @@ public class MainActivity extends AppCompatActivity {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                     hour_x = hourOfDay;
                     minute_x = minute;
+                    final Button timeBtn = (Button) findViewById(R.id.timeButton);
                     if(minute < 10){
-                        setTimeToBeBack(hour_x + ":" + "0" + minute_x);
+                        timeString = hour_x + ":" + "0" + minute_x;
+                        timeBtn.setText(timeString);
                     }else{
-                        setTimeToBeBack(hour_x + ":" + minute_x);
+                        timeString = hour_x + ":" + minute_x;
+                        timeBtn.setText(timeString);
                     }
                  //Toast.makeText(MainActivity.this, hour_x + ":" + minute_x, Toast.LENGTH_LONG).show();
                 }
@@ -99,26 +104,14 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
             PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, SMS.class), 0);
             SmsManager sms = SmsManager.getDefault();
-            String message = "I will be at: " + getLocation() +".\n" +   //Message to send
-                    "I will be back at: " + getTimeToBeBack() + ".\n";
-            sms.sendTextMessage(getPhoneNumber(), null, message, pi, null);
+            String message = "I will be at: " + alertObject.getLocation() +".\n" +   //Message to send
+                    "I will be back at: " + alertObject.getTimeToBeBack() + ".\n";
+            sms.sendTextMessage(alertObject.getPhoneNumber(), null, message, pi, null);
 
             //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
             //sendIntent.putExtra("sms_body", message);
             //sendIntent.setType("vnd.android-dir/mms-sms");
             //startActivity(sendIntent);
     }
-
-    //Getter and setter for phoneNumber
-    public String getPhoneNumber(){return phoneNumber;}
-    public void setPhoneNumber(String s){this.phoneNumber = s;}
-
-    //Getter and setter for location
-    public String getLocation() {return location;}
-    public void setLocation(String s) {this.location = s;}
-
-    //Getter and setter for timeToBeBack
-    public String getTimeToBeBack() {return timeToBeBack;}
-    public void setTimeToBeBack(String s) {this.timeToBeBack = s;}
 
 }

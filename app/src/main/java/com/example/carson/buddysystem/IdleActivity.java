@@ -17,10 +17,12 @@ import java.util.TimerTask;
 public class IdleActivity extends AppCompatActivity {
     public Timer _t; //timer for the task
 
-
+    private SMS alertObject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        alertObject = (SMS)i.getSerializableExtra("SMSObject");
         setContentView(R.layout.activity_idle);
 
         _t = new Timer();
