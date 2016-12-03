@@ -1,10 +1,14 @@
 package com.example.carson.buddysystem;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 setLocation(location.getText().toString());
                 //setTimeToBeBack(timeToBeBack.getText().toString());
                 System.out.println(getLocation() + " " + getPhoneNumber() + " " + getTimeToBeBack());
+                onSendTextMessage();
             }
         });
 
@@ -88,8 +93,17 @@ public class MainActivity extends AppCompatActivity {
      * Used when a button is pressed for now
      */
     protected void onSendTextMessage(){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
+            PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, SMS.class), 0);
+            SmsManager sms = SmsManager.getDefault();
+            String message = "I will be at: " + getLocation() +".\n" +   //Message to send
+                    "I will be back at: " + getTimeToBeBack() + ".\n";
+            sms.sendTextMessage(getPhoneNumber(), null, message, pi, null);
 
-
+            //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+            //sendIntent.putExtra("sms_body", message);
+            //sendIntent.setType("vnd.android-dir/mms-sms");
+            //startActivity(sendIntent);
     }
 
     //Getter and setter for phoneNumber
