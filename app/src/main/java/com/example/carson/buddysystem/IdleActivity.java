@@ -55,7 +55,7 @@ public class IdleActivity extends AppCompatActivity {
         public void run (){//runs if the user does not respond to the button
             onSendTextMessage();
             //could have a better message
-            IdleActivity.super.onBackPressed();
+            //cannnot do IdleActivity.super.onBackPressed();
             _t.cancel(); //end the task
         }
     }
