@@ -10,8 +10,82 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.carson.buddysystem.MainActivity">
 
-    <TextView
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Can't wake up." />
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/buddyNumber"
+        android:layout_below="@+id/buddyNumberLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/location"
+        android:layout_below="@+id/locationLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/timeBack"
+        android:layout_below="@+id/timeBackLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:text="Location:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/locationLabel"
+        android:layout_below="@+id/buddyNumber"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/buddyNumber"
+        android:layout_alignEnd="@+id/buddyNumber" />
+
+    <TextView
+        android:text="Buddy's Phone Number:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buddyNumberLabel"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/buddyNumber"
+        android:layout_alignEnd="@+id/buddyNumber" />
+
+    <TextView
+        android:text="Time Expected Back:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeBackLabel"
+        android:layout_below="@+id/location"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/locationLabel"
+        android:layout_alignEnd="@+id/locationLabel" />
+
+    <Button
+        android:text="Submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeBack"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/submitButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
