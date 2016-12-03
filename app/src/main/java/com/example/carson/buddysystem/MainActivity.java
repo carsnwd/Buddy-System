@@ -95,23 +95,4 @@ public class MainActivity extends AppCompatActivity {
                  //Toast.makeText(MainActivity.this, hour_x + ":" + minute_x, Toast.LENGTH_LONG).show();
                 }
             };
-
-    /**
-     * Send a text message
-     * Used when a button is pressed for now
-     */
-    protected void onSendTextMessage(){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
-            PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, SMS.class), 0);
-            SmsManager sms = SmsManager.getDefault();
-            String message = "I will be at: " + alertObject.getLocation() +".\n" +   //Message to send
-                    "I will be back at: " + alertObject.getTimeToBeBack() + ".\n";
-            sms.sendTextMessage(alertObject.getPhoneNumber(), null, message, pi, null);
-
-            //Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-            //sendIntent.putExtra("sms_body", message);
-            //sendIntent.setType("vnd.android-dir/mms-sms");
-            //startActivity(sendIntent);
-    }
-
 }

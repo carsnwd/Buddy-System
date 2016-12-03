@@ -1,8 +1,10 @@
 package com.example.carson.buddysystem;
+import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
