@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+/**
+ * Mainactivity of our app
+ */
 public class MainActivity extends AppCompatActivity {
 
     private String phoneNumber; //information about where the user is going
@@ -29,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
+        /**
         Button listener to get data from view
-         */
+         **/
         final Button submitBtn = (Button) findViewById(R.id.submitButton);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
