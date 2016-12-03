@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,11 +17,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        Button listener to get data from view
+         */
         final Button submitBtn = (Button) findViewById(R.id.submitButton);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                EditText phoneNumber = (EditText)findViewById(R.id.buddyNumber);
+                EditText location = (EditText)findViewById(R.id.location);
+                EditText timeToBeBack = (EditText)findViewById(R.id.timeBack);
+                setPhoneNumber(phoneNumber.getText().toString());
+                setLocation(location.getText().toString());
+                setTimeToBeBack(timeToBeBack.getText().toString());
+
+                //System.out.println(getLocation() + " " + getPhoneNumber() + " " + getTimeToBeBack());
             }
         });
     }
